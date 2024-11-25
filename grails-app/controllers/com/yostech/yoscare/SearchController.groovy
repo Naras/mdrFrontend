@@ -5,6 +5,7 @@ import grails.web.servlet.mvc.GrailsParameterMap
 import org.apache.commons.lang3.StringUtils
 import org.springframework.util.LinkedMultiValueMap
 import org.springframework.util.MultiValueMap
+import grails.config.Config
 
 @Secured(['IS_AUTHENTICATED_FULLY'])
 class SearchController {
@@ -12,6 +13,23 @@ class SearchController {
     def index() {
 
     }
+
+    //def grailsApplication
+    def mdrUrl(){
+        Config config = grailsApplication.config
+        def mdrURL =  config.getProperty('mdr.host.ipaddress')
+        mdrURL
+    }
+    def mdrapp(){
+        Config config = grailsApplication.config
+        def mdrApp = config.getProperty('mdr.mdrapp.name')
+        mdrApp
+     }
+    def mdrfilePathPrefix(){
+        Config config = grailsApplication.config
+        def mdrfilePathPrefix = config.getProperty('mdr.folder.filepath')
+        mdrfilePathPrefix
+     }
 
     def searchService
     def searchresults(){
@@ -26,7 +44,8 @@ class SearchController {
             }
         }
         println " form" +form
-        def resp = client.post("http://localhost:8680/MDR/externalSearch.action") {
+        //def resp = client.post("http://localhost:8080/MDR/externalSearch.action") {
+        def resp = client.post("${mdrUrl()}/${mdrapp()}/externalSearch.action") {
             accept("application/json")
             contentType("application/x-www-form-urlencoded")
             body(form)
@@ -60,7 +79,8 @@ class SearchController {
         form.add("digitalManuscriptVO.id", params?.id)
 
 
-        def resp = client.post("http://localhost:8680/MDR/externalSearch.action") {
+        //def resp = client.post("http://localhost:8080/MDR/externalSearch.action") {
+        def resp = client.post("${mdrUrl()}/${mdrapp()}/externalSearch.action") {
             accept("application/json")
             contentType("application/x-www-form-urlencoded")
             body(form)
@@ -79,7 +99,8 @@ class SearchController {
     }
 
     def displayImage() {
-        println "params "+params
+        println " SearchController displayImage: params " + params
+	//println "isThumbnail $params.isThumbnail" 
         def imageResults = searchService.searchResultsForQueryTransform("select id,digitalManuscriptFkId,filePath,islast,frame_order from omds_digital_manuscript_frame where  id='${params?.id}' order by frame_order")
         if (imageResults.size()>0 && imageResults[0].filePath!=null) {
             println imageResults[0].filePath
@@ -88,7 +109,32 @@ class SearchController {
             byte[] imageInByte = searchService.customImageSizeInBytes(params?.isThumbnail,imageResults[0].filePath,params?.width,params?.height)
             response.outputStream << imageInByte
             response.outputStream.flush()
-        }
+	}
         //render "OK"
     }
+
+	def displayPdf() {
+	    println "SearchController displayPdf: params " + params 
+    // Query for the image results
+    def pdfResults = searchService.searchResultsForQueryTransform("select id,digitalManuscriptFkId,filePath,islast,frame_order from omds_digital_manuscript_frame where id='${params?.id}' order by frame_order")
+
+    if (pdfResults.size() > 0 && pdfResults[0].filePath != null) {
+        //def filePath = "/home/intel/root-mdr-media/sciencetechnology/img/"+pdfResults[0].filePath
+        def filePath = mdrfilePathPrefix()+"/"+pdfResults[0].filePath
+        def isThumbnail = params?.isThumbnail?.toBoolean()
+
+        println "filePath:"+filePath
+        println "results:"+pdfResults
+            // Handle PDF file
+            File pdfFile = new File(filePath)
+            if (pdfFile.exists()) {
+                response.contentType = "application/pdf" // Set the Content-Type for PDF
+		response.setHeader("Content-Disposition", "inline; filename=\"${pdfFile.name}\"")
+                response.outputStream << pdfFile.bytes // Stream the PDF file
+                response.outputStream.flush()
+                response.outputStream.close()
+            } else {
+                response.status = 404
+                response.writer << "PDF file not found."
+            }}}
 }

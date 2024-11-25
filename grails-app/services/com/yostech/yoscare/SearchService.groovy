@@ -102,7 +102,9 @@ class SearchService {
         //String folderPath = (ResourceBundle.getBundle("ApplicationResources", IndvenApplicationConstants.LOCALE)
           //      .getObject("images.system.path").toString()).trim();
         ///root/mdr/media/img/
-        String folderPath = "/root/mdr/media/cede/img"
+        // String folderPath = "/root/mdr/media/sciencetechnology/img"
+	Config config = grailsApplication.config
+        String folderPath = config.getProperty('mdr.folder.filepath')
         System.out.println("folderPath "+folderPath);
         File file = new File(FilenameUtils.separatorsToSystem(folderPath+ "/"+imagePath));
         System.out.println(file.toString());

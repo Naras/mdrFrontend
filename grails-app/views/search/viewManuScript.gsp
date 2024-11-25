@@ -12,6 +12,7 @@
         <!-- Add LightBox CSS files -->
 
         <asset:stylesheet href="lightgallery.css"/>
+        <asset:stylesheet href="font-awesome.css"/>
         <style type="text/css">
 
         .demo-gallery > ul {
@@ -148,6 +149,37 @@
         <asset:stylesheet href="justifiedGallery.min.css-min.css" />
     </head>
     <content tag="main-content">
+
+        <script type="text/javascript">
+
+
+            $(document).ready(function(){
+               /* $('#aniimated-thumbnials').lightGallery({
+                    thumbnail:true
+                });*/
+                $('#lightgallery').lightGallery();
+
+            });
+
+            $(".showModal").click(function(e) {
+                e.preventDefault();
+                var url = $(this).attr("data-href");
+              /*  $("#myModal iframe").attr("src", url);
+                $("#myModal").modal("show");*/
+               // eModal.iframe('http://saribe.github.io/toastr8/', 'Hot news')
+
+            });
+
+
+            function displayPdf(pdfId) {
+		pdfId = pdfId.substr(1)
+		console.log("displayPdf:", pdfId)
+                var link = "${createLink(controller:"search", action:"displayPdf")}/"+pdfId
+                //eModal.iframe('link', 'Hot news')
+                $("#myModal iframe").attr("src", link);
+                $("#myModal").modal("show");
+            }
+        </script>
 
         <div class="row">
             <div class="col-lg-12">
@@ -319,13 +351,36 @@
 
                                     <ul id="lightgallery" class="list-unstyled row">
                                         <g:each in="${imageResults}" var="image">
-                                            <li class="col-xs-6 col-sm-4 col-md-3" data-responsive="" data-src="${createLink(controller:"search", action:"displayImage", id:"${image.id}", params:['isThumbnail':true,'width':200,'height':200])}" data-sub-html="">
-                                                <a href="">
-                                                    <img class="img-responsive" src="${createLink(controller:"search", action:"displayImage", id:"${image.id}", params:['isThumbnail':true,'width':200,'height':200])}">
-                                                </a>
-                                            </li>
+                                            <g:if test="${!StringUtils.contains(image.filePath,".pdf")}">
+                                                <li class="col-xs-6 col-sm-4 col-md-3" data-responsive="" data-src="${createLink(controller:"search", action:"displayImage", id:"${image.id}", params:['isThumbnail':true,'width':200,'height':200])}" data-sub-html="">
+                                                    <a href="">
+                                                        <img class="img-responsive" src="${createLink(controller:"search", action:"displayImage", id:"${image.id}", params:['isThumbnail':true,'width':200,'height':200])}">
+                                                    </a>
+                                                </li>
+                                            </g:if>
+
                                         </g:each>
                                     </ul>
+
+
+                                    <ul id="pdfgallery" class="list-unstyled row">
+                                        <g:each in="${imageResults}" var="image">
+	
+                                            <g:if test="${StringUtils.contains(image.filePath,".pdf")}">
+						<p>viewManuscript.gsp Debug: id: ${image.id} path: ${image.filePath}</p>
+
+                                                <li class="col-xs-6 col-sm-4 col-md-3 showModal"  data-src-pdf="${createLink(controller:"search", action:"displayPdf", id:"${image.id}")}" data-sub-html="">
+                                                    %{--
+                                                          <img class="img-responsive" src="${createLink(controller:"search", action:"displayPdf", id:image.id}}">
+                                                      </a>--}%
+						<a href="${createLink(controller: 'search', action: 'displayPdf', params: [id: image.id, isThumbnail: false])}" target="_blank">
+    <i class="fa fa-file-pdf-o" style="font-size:15rem;color:red;font-weight:normal;" aria-hidden="true"></i>
+</a>
+
+                                            </g:if>
+                                        </g:each>
+                                    </ul>
+
                                 </div>
                             </div>
 
@@ -374,48 +429,37 @@
 
             </div>
         </div>
-        %{--<div class="row">
-            <div class="col-lg-12">
-                <div class="card">
-                    <div class="card-body">
-                        <g:link uri="/home" class="btn btn-primary">Back to Search</g:link>
-                        &nbsp;&nbsp;
 
-                    </div>
+    <div class="modal fade" id="myModal">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content" style="width:1100px">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">PDF</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <iframe src="" width="1024" height="600" frameborder="0" allowtransparency="true"></iframe>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+
             </div>
-        </div>--}%
-        %{--<asset:stylesheet src="blueimp-gallery.min.css"/>
-
-        <asset:javascript src="js/blueimp/blueimp-helper.js"/>
-        <g:javascript src="js/blueimp/blueimp-gallery.js"/>
-        <g:javascript src="blueimp/blueimp-gallery-fullscreen.js"/>
-        <g:javascript src="blueimp/jquery.blueimp-gallery.js"/>--}%
-
-        <script type="text/javascript">
-
-        /*$(document).ready(function(){
-            $('ul.gallery').bsPhotoGallery({
-                "classes" : "col-lg-2 col-md-4 col-sm-3 col-xs-4 col-xxs-12",
-                "hasModal" : true
-                // "fullHeight" : false
-            });
-        });*/
+        </div>
 
 
-            $(document).ready(function(){
-               /* $('#aniimated-thumbnials').lightGallery({
-                    thumbnail:true
-                });*/
-                $('#lightgallery').lightGallery();
+    </div>
+            <script src="https://cdn.jsdelivr.net/picturefill/2.3.1/picturefill.min.js"></script>
 
-            });
-        </script>
+            <asset:javascript src="lightgallery-all.js" />
+            <asset:javascript src="jquery.mousewheel.min.js" />
+            <script src="https://unpkg.com/emodal@1.2.69/dist/eModal.min.js" />
 
-        <script src="https://cdn.jsdelivr.net/picturefill/2.3.1/picturefill.min.js"></script>
-
-        <asset:javascript src="lightgallery-all.js" />
-        <asset:javascript src="jquery.mousewheel.min.js" />
-
-    </content>
+        </content>
 </g:applyLayout>
