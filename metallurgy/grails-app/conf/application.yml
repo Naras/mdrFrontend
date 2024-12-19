@@ -1,0 +1,146 @@
+---
+grails:
+    profile: web
+    codegen:
+        defaultPackage: com.yostech.yoscare
+    spring:
+        transactionManagement:
+            proxies: false
+    gorm:
+        reactor:
+            # Whether to translate GORM events into Reactor events
+            # Disabled by default for performance reasons
+            events: false
+info:
+    app:
+        name: '@info.app.name@'
+        version: '@info.app.version@'
+        grailsVersion: '@info.app.grailsVersion@'
+spring:
+    main:
+        banner-mode: "off"
+    groovy:
+        template:
+            check-template-location: false
+
+# Spring Actuator Endpoints are Disabled by Default
+endpoints:
+    enabled: false
+    jmx:
+        enabled: true
+
+---
+grails:
+    mime:
+        disable:
+            accept:
+                header:
+                    userAgents:
+                        - Gecko
+                        - WebKit
+                        - Presto
+                        - Trident
+        types:
+            all: '*/*'
+            atom: application/atom+xml
+            css: text/css
+            csv: text/csv
+            form: application/x-www-form-urlencoded
+            html:
+              - text/html
+              - application/xhtml+xml
+            js: text/javascript
+            json:
+              - application/json
+              - text/json
+            multipartForm: multipart/form-data
+            pdf: application/pdf
+            rss: application/rss+xml
+            text: text/plain
+            hal:
+              - application/hal+json
+              - application/hal+xml
+            xml:
+              - text/xml
+              - application/xml
+    urlmapping:
+        cache:
+            maxsize: 1000
+    controllers:
+        defaultScope: singleton
+    converters:
+        encoding: UTF-8
+    views:
+        default:
+            codec: html
+        gsp:
+            encoding: UTF-8
+            htmlcodec: xml
+            codecs:
+                expression: html
+                scriptlets: html
+                taglib: none
+                staticparts: none
+endpoints:
+    jmx:
+        unique-names: true
+server:
+  port: 7181
+---
+hibernate:
+    cache:
+        queries: false
+        use_second_level_cache: false
+        use_query_cache: false
+dataSource:
+    pooled: true
+    jmxExport: true
+    driverClassName: com.mysql.jdbc.Driver
+    username: metallurgy
+    password: metallurgy123$%^
+
+environments:
+  development:
+     dataSource:
+       dbCreate: update
+       pooled: true
+       url: jdbc:mysql://localhost:3306/metalurgy?useUnicode=true&characterEncoding=UTF-8
+       username: metallurgy
+       password: metallurgy123$%^
+       driverClassName: com.mysql.jdbc.Driver
+       dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+       properties:
+         maxActive: -1
+         minEvictableIdleTimeMillis: 1800000
+         timeBetweenEvictionRunsMillis: 1800000
+         numTestsPerEvictionRun: 3
+         testOnBormetallurgyrow: true
+         testWhileIdle: true
+         testOnReturn: true
+         validationQuery: "SELECT 1"
+  production:
+       dataSource:
+         dbCreate: update
+         pooled: true
+         url: jdbc:mysql://localhost:3306/metalurgy?useUnicode=true&characterEncoding=UTF-8
+         username: metallurgy
+         password: metallurgy123$%^
+         driverClassName: com.mysql.jdbc.Driver
+         dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+         properties:
+           maxActive: -1
+           minEvictableIdleTimeMillis: 1800000
+           timeBetweenEvictionRunsMillis: 1800000
+           numTestsPerEvictionRun: 3
+           testOnBorrow: true
+           testWhileIdle: true
+           testOnReturn: true
+           validationQuery: "SELECT 1"
+---
+mdr:
+  host:
+    ipaddress: http://localhost:8080/
+  folder:
+    filepath: /home/intel/root-mdr-media/metalurgy/img
+  mdrapp:
+    name: MDRMetallurgy
