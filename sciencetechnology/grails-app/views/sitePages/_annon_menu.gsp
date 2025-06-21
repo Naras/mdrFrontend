@@ -2,6 +2,7 @@
     <li><g:link uri="/">Home</g:link></li>
     %{--<li><g:link controller="sitePages" action="index">Enter</g:link></li>--}%
     <li><g:link controller="sitePages" action="branchesOfScience">Branches</g:link></li>
+    <li><g:link controller="sitePages" action="searchSubjectDocType">Search by Subject/Doctype</g:link></li>
     <li>
         <sec:ifNotLoggedIn>
             <g:link controller="login" action="auth">Login</g:link>

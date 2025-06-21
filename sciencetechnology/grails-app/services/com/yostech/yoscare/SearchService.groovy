@@ -128,6 +128,10 @@ class SearchService {
         //println "resp ----sdasdsadasdsdsfdsf "+resp.getJson()
     }
 
+    def searchBySubjectAndType(Integer categoryFkId,Integer  docType) {
+    return DigitalManuscript.findAllBySubjectAndDocumentType(categoryFkId, docType)
+}
+
 
 }
 /*

@@ -33,6 +33,17 @@ class SearchController {
      }
 
     def searchService
+def results() {
+    Integer categoryFkId = params.int('categoryFkId') ?: 9
+    Integer docType = params.int('docType') ?: 1
+
+    println "Received params - categoryFkId: $categoryFkId, docType: $docType"
+
+    def results = searchService.searchBySubjectAndType(categoryFkId, docType)
+
+    render(view: "index", model: [searchResults: results])
+}
+
     def searchresults(){
         println " in params "+params
         def client = new grails.plugins.rest.client.RestBuilder()

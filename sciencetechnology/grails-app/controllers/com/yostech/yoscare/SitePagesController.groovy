@@ -7,7 +7,7 @@ import grails.plugin.springsecurity.annotation.Secured
 class SitePagesController {
     private Map getMdrConfig() {
         def mdrHost = grailsApplication.config.mdr.host.ipaddress ?: "http://127.0.0.1:8080/"
-        def mdrAppName = grailsApplication.config.mdr.appname ?: "MDR"
+        def mdrAppName = grailsApplication.config.mdr.mdrapp.name ?: "MDR"
         return [mdrHost: mdrHost, mdrAppName: mdrAppName]
     }
 
@@ -62,6 +62,10 @@ class SitePagesController {
     
     def physics() {
         render(view: "branches-of-science/natural-sciences/physics/index", model: getMdrConfig())
+    }
+
+    def searchSubjectDocType() {
+        render(view: "_search_form_django.gsp", model: [categoryFkId: 9, documentType: 2])
     }
 }
 

@@ -1,0 +1,27 @@
+package philosophy
+
+class UrlMappings {
+
+    static mappings = {
+        "/$controller/$action?/$id?(.$format)?"{
+            constraints {
+                // apply constraints here
+            }
+        }
+
+        "/"(view:"/index")
+        "500"(view:'/error')
+        "404"(view:'/notFound')
+        "/philosophy"(controller: "sitePages", action: "philosophy")
+        "/philosophy/orthodox-systems"(controller: "sitePages", action: "orthodoxSystems")
+        "/philosophy/orthodox-systems/nyaya"(controller: "sitePages", action: "nyaya")
+        "/philosophy/orthodox-systems/vaishesika"(controller: "sitePages", action: "vaishesika")
+        "/philosophy/orthodox-systems/yoga"(controller: "sitePages", action: "yoga")
+        "/philosophy/orthodox-systems/purvamimamsa"(controller: "sitePages", action: "purvamimamsa")
+        "/philosophy/orthodox-systems/uttaramimamsa"(controller: "sitePages", action: "uttaramimamsa")
+        "/philosophy/heterodox-systems"(controller: "sitePages", action: "heterodoxSystems")
+        "/philosophy/heterodox-systems/carvaka"(controller: "sitePages", action: "carvaka")
+        "/philosophy/heterodox-systems/bauddha"(controller: "sitePages", action: "bauddha")
+        "/philosophy/heterodox-systems/jaina"(controller: "sitePages", action: "jaina")
+    }
+}
