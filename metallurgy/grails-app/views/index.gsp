@@ -35,7 +35,8 @@
             </div>
             <div style="float: right;
             ">
-                Foundation for Indian Civilization Studies
+                %{--Foundation for Indian Civilization Studies--}%
+                Indian Metallurgy Through The Ages
             </div>
         </div>
     </div>

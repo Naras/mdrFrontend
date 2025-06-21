@@ -367,7 +367,7 @@
                                         <g:each in="${imageResults}" var="image">
 	
                                             <g:if test="${StringUtils.contains(image.filePath,".pdf")}">
-						<p>viewManuscript.gsp Debug: id: ${image.id} path: ${image.filePath}</p>
+						%{--<p>viewManuscript.gsp Debug: id: ${image.id} path: ${image.filePath}</p>--}%
 
                                                 <li class="col-xs-6 col-sm-4 col-md-3 showModal"  data-src-pdf="${createLink(controller:"search", action:"displayPdf", id:"${image.id}")}" data-sub-html="">
                                                     %{--
