@@ -79,7 +79,7 @@
                     %{--<li class="nav-item right-side-toggle"> <a class="nav-link  waves-effect waves-light" href="javascript:void(0)"><i class="ti-settings"></i></a></li>--}%
                 </ul>
             </sec:ifLoggedIn>
-            <h2 style="font-weight: bold;">Foundation for Indian Civilization Studies</h2>
+            <h2 style="font-weight: bold;">Science & Technology Documents</h2>
         </div>
     </nav>
 </header>

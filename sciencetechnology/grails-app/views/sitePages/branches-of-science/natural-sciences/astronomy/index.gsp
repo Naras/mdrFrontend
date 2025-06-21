@@ -34,7 +34,8 @@
     </style>
 </head>
 <body class="bg-full h-screen max-w-screen">
-    <nav class="flex justify-end p-4 pr-8 text-[#646464] bg-[#A6C4FF] gap-4">
+    <nav class="flex justify-end p-4 pr-8 gap-4">
+    <%-- <nav class="flex justify-end p-4 pr-8 text-[#646464] bg-[#A6C4FF] gap-4"> --%>
       <div class="flex gap-1 cursor-pointer items-center"
         %{--onclick="window.location.href = document.URL.split('/').slice(0, -3).join('/')"
       >

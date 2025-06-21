@@ -2,7 +2,8 @@
 <g:applyLayout name="adminlte">
     <head >
         <meta name="layout" content="main">
-        <g:set var="pageHeader" value="${message(code: 'default.dashboard.label', default: 'Dashboard')}"/>
+        <g:set var="pageHeader" value="Search Dcouments - Science and Technology"/>
+        %{--<g:set var="pageHeader" value="${message(code: 'default.dashboard.label', default: 'Dashboard')}"/>--}%
         <title><g:message value="${message(code: 'default.dashboard.label', default: 'Dashboard')}"/></title>
 
 

@@ -85,7 +85,7 @@ endpoints:
     jmx:
         unique-names: true
 server:
-  port: 7182
+  port: 7183
 ---
 hibernate:
     cache:
@@ -145,4 +145,4 @@ mdr:
     filepath: /home/intel/root-mdr-media/sciencetechnology/img
     # filepath: /root/mdr/media/sciencetechnology/img
   mdrapp:
-    name: MDR
+    name: MDRScience
