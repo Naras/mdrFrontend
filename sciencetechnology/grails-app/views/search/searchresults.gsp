@@ -10,7 +10,9 @@
 
     </head>
     <content tag="main-content">
-        <g:render template="/home/search_form"/>
+        <g:if test="${showSearchForm != false}">
+            <g:render template="/home/search_form"/>
+        </g:if>
         <div class="row">
             <div class="col-lg-12">
                 <div class="card">

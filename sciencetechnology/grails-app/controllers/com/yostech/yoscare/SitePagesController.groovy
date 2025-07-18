@@ -39,29 +39,54 @@ class SitePagesController {
         render(view: "branches-of-science/social-sciences/index")
     }
 
+    def searchService
     // Actions for subpages under natural sciences
     def astronomy() {
-        render(view: "branches-of-science/natural-sciences/astronomy/index", model: getMdrConfig())
+        int categoryFkId = 9
+        int bookCount = searchService.countByCategoryAndType(categoryFkId, 1)
+        int manuscriptCount = searchService.countByCategoryAndType(categoryFkId, 2)
+        int articleCount = searchService.countByCategoryAndType(categoryFkId, 3)
+        render(view: "branches-of-science/natural-sciences/astronomy/index", model: getMdrConfig() + [bookCount: bookCount, manuscriptCount: manuscriptCount, articleCount: articleCount])
     }
 
     def botany() {
-        render(view: "branches-of-science/natural-sciences/botany/index", model: getMdrConfig())
+        int categoryFkId = 13
+        int bookCount = searchService.countByCategoryAndType(categoryFkId, 1)
+        int manuscriptCount = searchService.countByCategoryAndType(categoryFkId, 2)
+        int articleCount = searchService.countByCategoryAndType(categoryFkId, 3)
+        render(view: "branches-of-science/natural-sciences/botany/index", model: getMdrConfig() + [bookCount: bookCount, manuscriptCount: manuscriptCount, articleCount: articleCount])
     }
 
     def chemistry() {
-        render(view: "branches-of-science/natural-sciences/chemistry/index", model: getMdrConfig())
+        int categoryFkId = 14
+        int bookCount = searchService.countByCategoryAndType(categoryFkId, 1)
+        int manuscriptCount = searchService.countByCategoryAndType(categoryFkId, 2)
+        int articleCount = searchService.countByCategoryAndType(categoryFkId, 3)
+        render(view: "branches-of-science/natural-sciences/chemistry/index", model: getMdrConfig() + [bookCount: bookCount, manuscriptCount: manuscriptCount, articleCount: articleCount])
     }
 
     def ecology() {
-        render(view: "branches-of-science/natural-sciences/ecology/index", model: getMdrConfig())
+        int categoryFkId = 17
+        int bookCount = searchService.countByCategoryAndType(categoryFkId, 1)
+        int manuscriptCount = searchService.countByCategoryAndType(categoryFkId, 2)
+        int articleCount = searchService.countByCategoryAndType(categoryFkId, 3)
+        render(view: "branches-of-science/natural-sciences/ecology/index", model: getMdrConfig() + [bookCount: bookCount, manuscriptCount: manuscriptCount, articleCount: articleCount])
     }
 
     def earthsciences() {
-        render(view: "branches-of-science/natural-sciences/earth-sciences/index", model: getMdrConfig())
+        int categoryFkId = 16
+        int bookCount = searchService.countByCategoryAndType(categoryFkId, 1)
+        int manuscriptCount = searchService.countByCategoryAndType(categoryFkId, 2)
+        int articleCount = searchService.countByCategoryAndType(categoryFkId, 3)
+        render(view: "branches-of-science/natural-sciences/earth-sciences/index", model: getMdrConfig() + [bookCount: bookCount, manuscriptCount: manuscriptCount, articleCount: articleCount])
     }
     
     def physics() {
-        render(view: "branches-of-science/natural-sciences/physics/index", model: getMdrConfig())
+        int categoryFkId = 51
+        int bookCount = searchService.countByCategoryAndType(categoryFkId, 1)
+        int manuscriptCount = searchService.countByCategoryAndType(categoryFkId, 2)
+        int articleCount = searchService.countByCategoryAndType(categoryFkId, 3)
+        render(view: "branches-of-science/natural-sciences/physics/index", model: getMdrConfig() + [bookCount: bookCount, manuscriptCount: manuscriptCount, articleCount: articleCount])
     }
 
     def searchSubjectDocType() {

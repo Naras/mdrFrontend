@@ -33,16 +33,49 @@ class SearchController {
      }
 
     def searchService
-def results() {
-    Integer categoryFkId = params.int('categoryFkId') ?: 9
-    Integer docType = params.int('docType') ?: 1
-
-    println "Received params - categoryFkId: $categoryFkId, docType: $docType"
-
-    def results = searchService.searchBySubjectAndType(categoryFkId, docType)
-
-    render(view: "index", model: [searchResults: results])
-}
+    def results() {
+        Integer categoryFkId = params.int('categoryFkId')
+        Integer docType = params.int('docType')
+    
+        if (!categoryFkId || !docType) {
+            // Or handle error appropriately
+            render(view: 'searchresults', model: [results: [], authors: [], params: params])
+            return
+        }
+        
+        // This query is based on the one found in SearchService, but simplified
+        def query = """
+            SELECT dm.id, dm.name, dm.regional_name, dm.diacritical_name, 
+                   GROUP_CONCAT(opa.name) as author, '' as authorRegionalName, dm.documentType
+            FROM omds_digital_manuscript dm
+            LEFT JOIN omds_manuscript_authormapper am ON dm.id = am.manuscriptfkid
+            LEFT JOIN omds_person opa ON am.authorfkid = opa.id
+            WHERE dm.isDeleted = 0 AND dm.categoryFkId = ${categoryFkId} AND dm.documentType = ${docType}
+            GROUP BY dm.id
+            ORDER BY dm.name
+        """
+        
+        def queryResults = searchService.searchResultsForQuery(query)
+        
+        final results = queryResults.collect { row ->
+            [
+                documentId: row[0],
+                documentName: row[1],
+                regionalName: row[2],
+                diacriticalName: row[3],
+                author: row[4],
+                authorRegionalName: row[5],
+                documentType: row[6]
+            ]
+        }
+    
+        def authorsResults = searchService.searchResultsForQuery("select name,trim(name) from omds_person where name not like '%test%' and name not like '%102%' group by  name order by trim(name)")
+        def authors = authorsResults.collectEntries { resultRow ->
+            [(resultRow[0]):resultRow[1]]
+        }
+    
+        render(view: 'searchresults', model: [results: results, authors: authors, params: params, showSearchForm: false])
+    }
 
     def searchresults(){
         println " in params "+params

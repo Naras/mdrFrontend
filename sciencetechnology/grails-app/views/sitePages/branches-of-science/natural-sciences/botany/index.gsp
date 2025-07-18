@@ -79,23 +79,28 @@
         our ancestors.
         </p>
         <div class="flex justify-evenly flex-wrap items-end mb-4">
+          <div class="flex justify-evenly w-full mb-4 gap-8">
+            <span class="bg-blue-900 text-white rounded-full px-6 py-2 text-lg font-semibold shadow">Manuscripts: ${manuscriptCount}</span>
+            <span class="bg-blue-900 text-white rounded-full px-6 py-2 text-lg font-semibold shadow">Books: ${bookCount}</span>
+            <span class="bg-blue-900 text-white rounded-full px-6 py-2 text-lg font-semibold shadow">Articles: ${articleCount}</span>
+          </div>
           <img
-            src="${resource(dir: 'images', file: 'assets/natural-sciences/botany/manuscripts.png')}"
+            src="${resource(dir: 'images', file: 'assets/natural-sciences/astronomy/manuscripts.png')}"
             alt="manuscripts"
             class="h-[200px] w-[250px] hover-pop cursor-pointer"
-            onclick="window.location.href = document.URL + 'manuscripts/'"
+            onclick="window.location.href = '${createLink(controller: 'search', action: 'results', params: [categoryFkId: 13, docType: 2])}'"
           />
           <img
-            src="${resource(dir: 'images', file: 'assets/natural-sciences/botany/books.png')}"
+            src="${resource(dir: 'images', file: 'assets/natural-sciences/astronomy/books.png')}"
             alt="books"
             class="h-[200px] w-[150px] pr-2 hover-pop cursor-pointer"
-            onclick="window.location.href = document.URL + 'books/'"
+            onclick="window.location.href = '${createLink(controller: 'search', action: 'results', params: [categoryFkId: 13, docType: 1])}'"
           />
           <img
-            src="${resource(dir: 'images', file: 'assets/natural-sciences/botany/articles.png')}"
+            src="${resource(dir: 'images', file: 'assets/natural-sciences/astronomy/articles.png')}"
             alt="articles"
             class="h-[200px] w-[150px] hover-pop cursor-pointer"
-            onclick="window.location.href = document.URL + 'articles/'"
+            onclick="window.location.href = '${createLink(controller: 'search', action: 'results', params: [categoryFkId: 13, docType: 3])}'"
           />
         </div>
       </div>

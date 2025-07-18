@@ -132,6 +132,14 @@ class SearchService {
     return DigitalManuscript.findAllBySubjectAndDocumentType(categoryFkId, docType)
 }
 
+    def countByCategoryAndType(Integer categoryFkId, Integer docType) {
+        final session = sessionFactory.currentSession
+        String query = "SELECT COUNT(*) FROM omds_digital_manuscript WHERE isDeleted = 0 AND categoryFkId = :categoryFkId AND documentType = :docType"
+        def sqlQuery = session.createSQLQuery(query)
+        sqlQuery.setParameter("categoryFkId", categoryFkId)
+        sqlQuery.setParameter("docType", docType)
+        return ((Number)sqlQuery.uniqueResult()).intValue()
+    }
 
 }
 /*
